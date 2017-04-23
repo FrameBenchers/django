@@ -11,7 +11,7 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 SECRET_KEY = 'snxj-hu-h5xe-)jtybh6*ppvlllm)9!t%rc8&&n3^3unm@o#@0'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = False
+DEBUG = True
 
 ALLOWED_HOSTS = ['*']
 
@@ -43,7 +43,7 @@ ROOT_URLCONF = 'djbench.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [],
+        'DIRS': [os.path.join(BASE_DIR, 'templates')],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
@@ -91,17 +91,31 @@ AUTH_PASSWORD_VALIDATORS = [
 LOGGING = {
     'version': 1,
     'disable_existing_loggers': False,
+    'formatters': {
+        'verbose': {
+            'format': '%(levelname)s;%(asctime)s;%(module)s;%(message)s',
+        },
+        'simple': {
+            'format': '%(levelname)s %(message)s'
+        },
+    },
     'handlers': {
         'file': {
-            'level': 'CRITICAL',
+            'level': 'INFO',
             'class': 'logging.FileHandler',
-            'filename': os.path.join(BASE_DIR, 'logs/worker.log'),
+            'filename': os.path.join(BASE_DIR, 'worker.log'),
+            'formatter': 'verbose'
         },
     },
     'loggers': {
         'django': {
             'handlers': ['file'],
-            'level': 'CRITICAL',
+            'level': 'ERROR',
+            'propagate': True,
+        },
+        'blog': {
+            'handlers': ['file'],
+            'level': 'INFO',
             'propagate': True,
         },
     },
@@ -125,3 +139,7 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/1.11/howto/static-files/
 
 STATIC_URL = '/static/'
+STATIC_ROOT = os.path.join(BASE_DIR, STATIC_URL.strip("/"))
+
+MEDIA_URL = '/media/'
+MEDIA_ROOT = os.path.join(BASE_DIR, MEDIA_URL.strip("/"))

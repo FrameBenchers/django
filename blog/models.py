@@ -1,9 +1,6 @@
 from django.db import models
 from django.contrib.auth import get_user_model
-import logging
 
-logger = logging.getLogger(__name__)
-logger.critical("Test log added")
 
 class Blog(models.Model):
     title = models.CharField(max_length=100, blank=False, null=False)
