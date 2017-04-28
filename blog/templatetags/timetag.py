@@ -6,6 +6,6 @@ logger = logging.getLogger(__name__)
 register = template.Library()
 
 @register.filter
-def current_time(obj):
-    # logger.info("Article Rendering Ended - 0001")
+def current_time(counter):
+    logger.info("%d Article Rendering Ended - 0001" % counter)
     return True
